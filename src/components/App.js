@@ -1,18 +1,41 @@
-import React, { useState } from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import Form from "./Form";
+import Cards from "./Cards";
 
-export default function App() {
-    const [count, setCount] = useState(0);
-    return (
-        <div>
-            This is a sample stateful and server-side
-            rendered React application.
-            <br />
-            <br />
-            Here is a button that will track
-            how many times you click it:
-            <br />
-            <br />
-            <button onClick={() => setCount(count + 1)}>{count}</button>
-        </div>
-    );
+class App extends Component {
+
+   // constructor(props) {
+   //    super(props);
+   //    this.state = {
+   //       profiles: testData,
+   //    };
+   // }
+
+   state = {
+      profiles: [],
+   };
+
+   addNewProfile = (profileData) => {
+      this.setState(prevState => ({
+         profiles: [...prevState.profiles, profileData]
+      }))
+   };
+
+   render() {
+      return (
+         <div>
+            <div className="header"> {this.props.title}</div>
+            <Form onSubmit={this.addNewProfile}/>
+            <Cards profiles={this.state.profiles}/>
+         </div>
+
+      );
+   }
 }
+
+App.propTypes = {
+   title: PropTypes.string
+};
+
+export default App;
